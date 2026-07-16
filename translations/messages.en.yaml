@@ -1,0 +1,46 @@
+# NAVBAR
+navbar:
+    home: "Home"
+    library: "My Library"
+    login: "Login"
+    logout: "Logout"
+
+# HOME PAGE
+home:
+    title: "Home"
+    hero_subtitle: "DISCOVER THE BEST GAMES WITH US"
+    trending: "TRENDING"
+    more: "More"
+    previous: "Previous"
+    next: "Next"
+    logged_in_as: "Logged in as"
+    login_prompt: "Log in to build your own game library"
+    search_game: "Search Game"
+    search_placeholder: "Type name..."
+    filter_by_price: "Filter by Price"
+    filter_all: "All"
+    filter_paid: "Paid"
+    currency: "AMD"
+    no_games_found: "No games found."
+
+# GAME SHOW PAGE
+game:
+    price: "Price"
+    free: "Free"
+    add_to_library: "ADD TO LIBRARY"
+    in_library: "IN LIBRARY"
+    reviews: "Reviews"
+    write_review: "Write a Review"
+    send_review: "Submit Review"
+    rating_label: "Select Rating"
+    comment_label: "Your Comment"
+    comment_placeholder: "What do you think about this game..."
+    no_reviews: "There are no reviews for this game yet. Be the first to share your thoughts!"
+    login_to_review: "You must log in to write a review or rate this game."
+
+# FOOTER
+footer:
+    about: "The ultimate digital gaming platform to discover, acquire, and manage your favorite games all in one place."
+    quick_links: "Quick Links"
+    system_status: "System Status"
+    copyright: "All rights reserved."

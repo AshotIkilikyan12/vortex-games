@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Իմ Գրադարանը - Vortex Games{% endblock %}
+
+{% block body %}
+<div class="container hero-section">
+    <div class="text-center mb-5">
+        <h1 class="gaming-title">ԻՄ ԳՐԱԴԱՐԱՆԸ</h1>
+        <p class="gaming-subtitle">// Ձեր հավաքածուն</p>
+        <div class="neon-divider"></div>
+    </div>
+
+    {# Flash հաղորդագրություններ (Հաջողության/Զգուշացման նեոնային շրջանակներով) #}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert bg-dark text-white mb-4 border border-{{ label == 'success' ? 'success' : 'warning' }}" 
+                 style="box-shadow: 0 0 15px {{ label == 'success' ? '#00ff88' : '#00f0ff' }}; border-radius: 0;">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    {% if games is empty %}
+        <div class="text-center no-games-alert">
+            <p class="fs-4 mb-3">Ձեր գրադարանը դեռ դատարկ է:</p>
+            <a href="{{ path('app_home') }}" class="gaming-btn">Բացահայտել Խաղերը</a>
+        </div>
+    {% else %}
+        <div class="row g-4">
+            {% for game in games %}
+                <div class="col-md-4">
+                    <div class="card h-100 gaming-card">
+                        
+                        {# Խաղի նկարը #}
+                        {% if game.image %}
+                            <img src="{{ game.image }}" class="card-img-top gaming-card-img" alt="{{ game.title }}">
+                        {% else %}
+                            <div class="d-flex align-items-center justify-content-center gaming-card-img text-muted" style="background-color: #121826; font-family: monospace;">
+                                [ NO_IMAGE ]
+                            </div>
+                        {% endif %}
+
+                        <div class="card-body d-flex flex-column justify-content-between p-4">
+                            <div>
+                                <h4 class="card-title text-uppercase">{{ game.title }}</h4>
+                                <p class="card-text game-card-desc mb-4">
+                                    {{ game.description|raw|slice(0, 100) }}...
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                            <span class="gaming-price">Գնված է</span>
+                            <a href="{{ path('app_game_show', {id: game.id}) }}" class="gaming-btn">
+                                Խաղալ
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

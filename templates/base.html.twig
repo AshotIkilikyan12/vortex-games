@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Vortex Games{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>🎬</text></svg>">
+        
+        {# Bootstrap և ձեր style.css-ը #}
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        
+        {% block stylesheets %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </head>
+    <body>
+        
+        {# ՆԱՎԻԳԱՑԻՈՆ ՎԱՀԱՆԱԿ (NAVBAR) #}
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background: #0d111c; border-bottom: 1px solid rgba(0, 240, 255, 0.15);">
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="{{ path('app_home') }}" style="letter-spacing: 1px;">
+                    VORTEX <span style="color: #00ff88;">GAMES</span>
+                </a>
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                    <ul class="navbar-nav gap-2">
+                        <li class="nav-item">
+                            <a class="nav-link text-uppercase" href="{{ path('app_home') }}">{{ 'navbar.home'|trans }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-uppercase" href="{{ path('app_library') }}">{{ 'navbar.library'|trans }}</a>
+                        </li>
+                    </ul>
+                    
+                    <div class="d-flex align-items-center gap-4">
+                        {# ԼԵԶՎԻ ՓՈՓՈԽՄԱՆ ԿՈՃԱԿՆԵՐԸ #}
+                        <div class="language-switcher d-flex align-items-center gap-2" style="font-family: monospace; font-size: 0.9rem;">
+                            <a href="{{ path('change_language', {locale: 'am'}) }}" 
+                               class="text-decoration-none transition-all {{ app.request.locale == 'am' ? 'text-success fw-bold' : 'text-muted' }}" 
+                               style="letter-spacing: 1px;">
+                                AM
+                            </a>
+                            <span class="text-secondary" style="opacity: 0.5;">|</span>
+                            <a href="{{ path('change_language', {locale: 'en'}) }}" 
+                               class="text-decoration-none transition-all {{ app.request.locale == 'en' ? 'text-success fw-bold' : 'text-muted' }}" 
+                               style="letter-spacing: 1px;">
+                                EN
+                            </a>
+                        </div>
+
+                        {# ՄՈՒՏՔ / ԵԼՔ ԿՈՃԱԿՆԵՐԸ #}
+                        <div class="auth-buttons">
+                            {% if app.user %}
+                                <a href="{{ path('app_logout') }}" class="gaming-btn text-decoration-none py-1 px-3 d-inline-block small text-uppercase" style="font-size: 0.8rem;">
+                                    {{ 'navbar.logout'|trans }}
+                                </a>
+                            {% else %}
+                                <a href="{{ path('app_login') }}" class="gaming-btn text-decoration-none py-1 px-3 d-inline-block small text-uppercase" style="font-size: 0.8rem;">
+                                    {{ 'navbar.login'|trans }}
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        {# ԷՋԵՐԻ ԲՈՎԱՆԴԱԿՈՒԹՅԱՆ ԲԼՈԿԸ #}
+        {% block body %}
+            {# Այստեղ կհայտնվի էջերի կոդը #}
+        {% endblock %}
+
+        {# ՖՈՒՏԵՐԸ ԳՐՎՈՒՄ Է BLOCK BODY-ԻՑ ԼԻՈՎԻՆ ԴՈՒՐՍ #}
+        <footer class="mt-5 border-top border-secondary py-5" style="background: #0d111c;">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-lg-4 col-md-6">
+                        <h5 class="text-white fw-bold mb-3" style="letter-spacing: 1px;">VORTEX <span style="color: #00ff88;">GAMES</span></h5>
+                        <p class="small text-muted" style="line-height: 1.6;">
+                            {{ 'footer.about'|trans }}
+                        </p>
+                        <div class="d-flex gap-2 mt-3">
+                            <span class="badge bg-dark border border-secondary text-info">v1.4.2</span>
+                            <span class="badge bg-dark border border-success text-success">ONLINE</span>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4 col-md-6">
+                        <h6 class="gaming-form-label mb-3">{{ 'footer.quick_links'|trans }}</h6>
+                        <ul class="list-unstyled d-flex flex-column gap-2 small">
+                            <li><a href="{{ path('app_home') }}" class="text-muted text-decoration-none hover-green" style="transition: color 0.2s;">⚡️ {{ 'navbar.home'|trans }}</a></li>
+                            <li><a href="{{ path('app_library') }}" class="text-muted text-decoration-none hover-green" style="transition: color 0.2s;">⚙️ {{ 'navbar.library'|trans }}</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="col-lg-4 col-md-12">
+                        <h6 class="gaming-form-label mb-3">{{ 'footer.system_status'|trans }}</h6>
+                        <div class="p-3 bg-dark border border-secondary" style="font-family: monospace; font-size: 0.8rem;">
+                            <div class="d-flex justify-content-between text-muted mb-1">
+                                <span>DATABASE:</span>
+                                <span class="text-success">CONNECTED</span>
+                            </div>
+                            <div class="d-flex justify-content-between text-muted mb-1">
+                                <span>MAMP SERVER:</span>
+                                <span class="text-success">RUNNING</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-5 pt-3 border-top border-secondary text-muted small">
+                    © 2026 VORTEX GAMES. {{ 'footer.copyright'|trans }} // DESIGNED FOR GAMERS
+                </div>
+            </div>
+        </footer>
+
+        {# Լրացուցիչ ոճեր լեզվի կոճակների համար #}
+        <style>
+        .hover-green:hover {
+            color: #00ff88 !important;
+            text-shadow: 0 0 5px rgba(0, 255, 136, 0.4);
+        }
+        .language-switcher a {
+            transition: color 0.2s, text-shadow 0.2s;
+        }
+        .language-switcher a:hover {
+            color: #00ff88 !important;
+            text-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
+        }
+        </style>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>

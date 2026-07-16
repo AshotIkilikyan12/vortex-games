@@ -1,0 +1,166 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ game.title }} | Vortex Games{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    
+    {# ԽԱՂԻ ՄԱՆՐԱՄԱՍՆԵՐԻ ԲԱԺԻՆ (HERO) #}
+    <div class="row mb-5">
+        <div class="col-md-6 mb-4 mb-md-0">
+            {% if game.image %}
+                <img src="{{ asset('uploads/games/' ~ game.image) }}" class="img-fluid rounded gaming-card w-100" alt="{{ game.title }}" style="border: 1px solid rgba(0, 240, 255, 0.25); max-height: 450px; object-fit: cover;">
+            {% else %}
+                <div class="d-flex align-items-center justify-content-center text-muted rounded gaming-card w-100" style="background-color: #121826; font-family: monospace; height: 350px; border: 1px solid rgba(0, 240, 255, 0.15);">
+                    <h3>[ NO_IMAGE ]</h3>
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="col-md-6 d-flex flex-column justify-content-between">
+            <div>
+                <h1 class="gaming-title text-uppercase mb-3" style="font-size: 2.5rem; letter-spacing: 2px;">{{ game.title }}</h1>
+                <div class="neon-divider mb-4" style="width: 100px;"></div>
+                
+                <p class="text-light" style="line-height: 1.7; opacity: 0.95; font-size: 1.1rem;">
+                    {{ game.description|nl2br }}
+                </p>
+            </div>
+            
+            <div class="mt-4 p-4 gaming-card d-flex align-items-center justify-content-between" style="border: 1px solid rgba(0, 240, 255, 0.15); background: #0d111c;">
+                <div>
+                    <span class="gaming-form-label d-block mb-1" style="font-size: 0.8rem;">ԱՐԺԵՔԸ</span>
+                    <h3 class="gaming-price m-0 fw-bold">
+                        {% if game.price == 0 %}
+                            ԱՆՎՃԱՐ
+                        {% else %}
+                            {{ game.price }} ԴՐԱՄ
+                        {% endif %}
+                    </h3>
+                </div>
+                
+                <div>
+                    {% if app.user %}
+                        {% if game in app.user.games %}
+                            <span class="badge bg-dark border border-success text-success py-3 px-4 fw-bold" style="font-size: 0.9rem; letter-spacing: 1px;">
+                                ✓ ԳՐԱԴԱՐԱՆՈՒՄ Է
+                            </span>
+                        {% else %}
+                            <a href="{{ path('app_library_add', {id: game.id}) }}" class="gaming-btn text-decoration-none py-3 px-4 d-inline-block fw-bold">
+                                ➕ ԱՎԵԼԱՑՆԵԼ ԳՐԱԴԱՐԱՆ
+                            </a>
+                        {% endif %}
+                    {% else %}
+                        <a href="{{ path('app_login') }}" class="gaming-btn text-decoration-none py-3 px-4 d-inline-block fw-bold">
+                            🔑 ՄՈՒՏՔ ԳՈՐԾԵԼ
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# ԿԱՐԾԻՔՆԵՐԻ ԵՎ ԳՆԱՀԱՏՄԱՆ ԲԱԺԻՆ #}
+    <div class="row mt-5 pt-5 border-top border-secondary">
+        {# ՁԱԽ ԿՈՂՄ՝ ԿԱՐԾԻՔ ԳՐԵԼՈՒ ՁԵՎԸ (FORM) #}
+        <div class="col-lg-6 mb-4">
+            <div class="p-4 gaming-card" style="border: 1px solid rgba(0, 240, 255, 0.15); background: #0d111c;">
+                <h4 class="text-white mb-4 text-uppercase" style="letter-spacing: 1px; font-weight: 700;">
+                    // Թողնել կարծիք
+                </h4>
+                
+                {% if app.user %}
+                    <form action="{{ path('app_game_review_add', {id: game.id}) }}" method="POST">
+                        {# Աստղիկների ընտրություն #}
+                        <div class="mb-4">
+                            <label class="gaming-form-label d-block mb-2">Ընտրեք գնահատականը</label>
+                            <div class="star-rating d-flex flex-row-reverse justify-content-end">
+                                {% for i in 5..1 %}
+                                    <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}" class="star-input d-none" required>
+                                    <label for="star{{ i }}" class="star-label fs-2 px-1" style="cursor: pointer; color: #1e293b; transition: color 0.2s, text-shadow 0.2s;">★</label>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        {# Կարծիքի տեքստային դաշտը #}
+                        <div class="mb-4">
+                            <label for="reviewContent" class="gaming-form-label mb-2">Ձեր մեկնաբանությունը</label>
+                            <textarea class="form-control gaming-input" id="reviewContent" name="content" rows="4" placeholder="Ի՞նչ եք կարծում այս խաղի մասին..." required></textarea>
+                        </div>
+
+                        {# CSRF Token անվտանգության համար #}
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('add_review') }}">
+
+                        <button type="submit" class="gaming-btn py-2 px-4 w-100">
+                            Ուղարկել Կարծիքը
+                        </button>
+                    </form>
+                {% else %}
+                    <div class="text-center py-4">
+                        <p class="text-muted small">Կարծիք թողնելու կամ գնահատելու համար անհրաժեշտ է նախ մուտք գործել:</p>
+                        <a href="{{ path('app_login') }}" class="gaming-btn text-decoration-none py-2 px-4 d-inline-block">
+                            Մուտք Գործել
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        {# ԱՋ ԿՈՂՄ՝ ԿԱՐԾԻՔՆԵՐԻ ՑՈՒՑԱԿԸ #}
+        <div class="col-lg-6">
+            <div class="p-4 gaming-card" style="border: 1px solid rgba(0, 240, 255, 0.15); background: #0d111c; max-height: 500px; overflow-y: auto;">
+                <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-secondary">
+                    <h4 class="text-white m-0 text-uppercase" style="letter-spacing: 1px; font-weight: 700;">
+                        // Կարծիքներ ({{ game.reviews|length }})
+                    </h4>
+                    {% if game.getAverageRating() %}
+                        <span class="text-warning fw-bold fs-5" style="text-shadow: 0 0 8px rgba(255, 193, 7, 0.3);">
+                            ⭐ {{ game.getAverageRating() }} / 5
+                        </span>
+                    {% endif %}
+                </div>
+
+                {% for review in game.reviews %}
+                    <div class="mb-4 pb-3 border-bottom border-secondary">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h6 class="text-white m-0" style="font-family: monospace; letter-spacing: 0.5px;">
+                                {{ review.user.userIdentifier }}
+                            </h6>
+                            <span class="text-warning" style="text-shadow: 0 0 5px rgba(255, 193, 7, 0.2);">
+                                {% for i in 1..5 %}
+                                    {{ i <= review.rating ? '★' : '☆' }}
+                                {% endfor %}
+                            </span>
+                        </div>
+                        <p class="small mb-1 text-light" style="line-height: 1.5; opacity: 0.9;">
+                            {{ review.content|nl2br }}
+                        </p>
+                        <small class="text-muted d-block mt-1" style="font-size: 0.75rem;">
+                            {{ review.createdAt|date('d.m.Y H:i') }}
+                        </small>
+                    </div>
+                {% else %}
+                    <div class="text-center py-5 text-muted">
+                        <p class="mb-0">Այս խաղի համար դեռևս կարծիքներ չկան։ Եղեք առաջինը և կիսվեք ձեր կարծիքով։</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+{# ԳԵՂԵՑԻԿ ԱՍՏՂԵՐԻ CSS ՈՃԵՐ #}
+<style>
+    .star-rating .star-input:checked ~ .star-label {
+        color: #ffc107 !important;
+        text-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
+    }
+
+    .star-rating .star-label:hover,
+    .star-rating .star-label:hover ~ .star-label {
+        color: #ffdb70 !important;
+        text-shadow: 0 0 12px rgba(255, 219, 112, 0.6);
+    }
+</style>
+{% endblock %}

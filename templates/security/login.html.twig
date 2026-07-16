@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Մուտք | Vortex Games{% endblock %}
+
+{% block body %}
+<div class="container d-flex justify-content-center">
+    <div class="gaming-form-container">
+        <form method="post">
+            {% if error %}
+                <div class="alert alert-danger" style="border-radius: 0px; background: #2a0813; color: #ff0055; border-color: #ff0055;">
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
+            {% endif %}
+
+            {% if app.user %}
+                <div class="mb-3 text-light">
+                    Դուք արդեն մուտք եք գործել որպես {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}" class="text-danger">Դուրս գալ</a>
+                </div>
+            {% endif %}
+
+            <h1>Մուտք</h1>
+            
+            <div class="mb-3">
+                <label for="inputEmail" class="gaming-form-label">Էլ. հասցե</label>
+                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control gaming-input" autocomplete="email" required autofocus>
+            </div>
+
+            <div class="mb-3">
+                <label for="inputPassword" class="gaming-form-label">Գաղտնաբառ</label>
+                <input type="password" name="password" id="inputPassword" class="form-control gaming-input" autocomplete="current-password" required>
+            </div>
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+            {# Remeber Me չեքբոքսը, քանի որ ընտրել էիք yes #}
+            <div class="mb-3 form-check d-flex align-items-center gap-2">
+                <input type="checkbox" name="_remember_me" id="_remember_me" class="form-check-input gaming-checkbox">
+                <label class="form-check-label small mb-0 ms-1" for="_remember_me" style="color: #94a3b8 !important;">
+                    Հիշել ինձ
+                </label>
+            </div>
+
+            <button class="gaming-btn w-100 mt-2" type="submit">
+                Մուտք Գործել
+            </button>
+            
+            <div class="text-center mt-3">
+                <a href="{{ path('app_register') }}" style="color: #00f0ff; text-decoration: none; font-size: 0.9rem;">Չունե՞ք հաշիվ։ Գրանցվեք</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
