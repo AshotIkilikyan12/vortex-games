@@ -1,33 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Գրանցում | Vortex Games{% endblock %}
+{% block title %}{{ 'register.page_title'|trans }} | Vortex Games{% endblock %}
 
 {% block body %}
 <div class="container d-flex justify-content-center">
     <div class="gaming-form-container">
-        <h1>Գրանցում</h1>
+        <h1>{{ 'register.heading'|trans }}</h1>
 
         {{ form_errors(registrationForm) }}
 
         {{ form_start(registrationForm) }}
             <div class="mb-3">
-                <label class="gaming-form-label">Էլ. հասցե</label>
+                <label class="gaming-form-label">{{ 'register.email_label'|trans }}</label>
                 {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control gaming-input'}}) }}
             </div>
             
             <div class="mb-3">
-                <label class="gaming-form-label">Գաղտնաբառ</label>
+                <label class="gaming-form-label">{{ 'register.password_label'|trans }}</label>
                 {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control gaming-input'}}) }}
             </div>
 
             <div class="mb-3 form-check d-flex align-items-center gap-2">
                 {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input gaming-checkbox'}}) }}
                 <label class="form-check-label text-muted small mb-0 ms-1" style="color: #94a3b8 !important;">
-                    Համաձայն եմ պայմաններին
+                    {{ 'register.agree_terms'|trans }}
                 </label>
             </div>
 
-            <button type="submit" class="gaming-btn w-100 mt-2">Գրանցվել</button>
+            <button type="submit" class="gaming-btn w-100 mt-2">{{ 'register.submit_btn'|trans }}</button>
         {{ form_end(registrationForm) }}
     </div>
 </div>

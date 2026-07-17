@@ -44,3 +44,12 @@ footer:
     quick_links: "Quick Links"
     system_status: "System Status"
     copyright: "All rights reserved."
+
+# REGISTRATION PAGE
+register:
+    page_title: "Registration"
+    heading: "Register"
+    email_label: "Email Address"
+    password_label: "Password"
+    agree_terms: "I agree to the terms"
+    submit_btn: "Register"

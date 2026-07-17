@@ -44,3 +44,12 @@ footer:
     quick_links: "Արագ Հղումներ"
     system_status: "Համակարգային Ստատուս"
     copyright: "Բոլոր իրավունքները պաշտպանված են:"
+
+# ԳՐԱՆՑՄԱՆ ԷՋ (REGISTRATION PAGE)
+register:
+    page_title: "Գրանցում"
+    heading: "Գրանցում"
+    email_label: "Էլ. հասցե"
+    password_label: "Գաղտնաբառ"
+    agree_terms: "Համաձայն եմ պայմաններին"
+    submit_btn: "Գրանցվել"
