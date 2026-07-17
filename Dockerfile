@@ -1,11 +1,14 @@
 FROM php:8.2-apache
 
-# Տեղադրում ենք անհրաժեշտ գրադարանները և PHP extension-ները
+# Տեղադրում ենք անհրաժեշտ համակարգային գրադարանները
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     git \
     unzip \
-    && docker-php-ext-install pdo pdo_pgsql
+    libicu-dev \
+    libzip-dev \
+    zip \
+    && docker-php-ext-install pdo pdo_pgsql intl zip
 
 # Միացնում ենք Apache mod_rewrite-ը Symfony-ի համար
 RUN a2enmod rewrite
@@ -20,9 +23,11 @@ COPY . /var/www/html
 
 # Տեղադրում ենք Composer-ը
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-RUN composer install --no-dev --optimize-autoloader
+
+# Ավելացնում ենք --ignore-platform-reqs, որպեսզի platform extension-ների պատճառով չկանգնի
+RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs
 
 # Տալիս ենք թույլտվություններ (Permissions) cache-ի համար
-RUN chown -r www-data:www-data /var/www/html/var
+RUN mkdir -p /var/www/html/var && chown -R www-data:www-data /var/www/html/var
 
 EXPOSE 80
