@@ -65,3 +65,13 @@ login:
     remember_me: "Remember me"
     submit_btn: "Sign In"
     no_account: "Don't have an account? Register"
+
+# LIBRARY PAGE
+library:
+    page_title: "My Library"
+    heading: "MY LIBRARY"
+    sub_heading: "Your Collection"
+    empty_msg: "Your library is currently empty."
+    discover_btn: "Discover Games"
+    purchased: "Purchased"
+    play_btn: "Play"

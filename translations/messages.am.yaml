@@ -65,3 +65,13 @@ login:
     remember_me: "Հիշել ինձ"
     submit_btn: "Մուտք Գործել"
     no_account: "Չունե՞ք հաշիվ։ Գրանցվեք"
+
+# ԳՐԱԴԱՐԱՆԻ ԷՋ (LIBRARY PAGE)
+library:
+    page_title: "Իմ Գրադարանը"
+    heading: "ԻՄ ԳՐԱԴԱՐԱՆԸ"
+    sub_heading: "Ձեր հավաքածուն"
+    empty_msg: "Ձեր գրադարանը դեռ դատարկ է:"
+    discover_btn: "Բացահայտել Խաղերը"
+    purchased: "Գնված է"
+    play_btn: "Խաղալ"

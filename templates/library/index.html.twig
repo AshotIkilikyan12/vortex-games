@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Իմ Գրադարանը - Vortex Games{% endblock %}
+{% block title %}{{ 'library.page_title'|trans }} - Vortex Games{% endblock %}
 
 {% block body %}
 <div class="container hero-section">
     <div class="text-center mb-5">
-        <h1 class="gaming-title">ԻՄ ԳՐԱԴԱՐԱՆԸ</h1>
-        <p class="gaming-subtitle">// Ձեր հավաքածուն</p>
+        <h1 class="gaming-title">{{ 'library.heading'|trans }}</h1>
+        <p class="gaming-subtitle">// {{ 'library.sub_heading'|trans }}</p>
         <div class="neon-divider"></div>
     </div>
 
@@ -15,15 +15,15 @@
         {% for message in messages %}
             <div class="alert bg-dark text-white mb-4 border border-{{ label == 'success' ? 'success' : 'warning' }}" 
                  style="box-shadow: 0 0 15px {{ label == 'success' ? '#00ff88' : '#00f0ff' }}; border-radius: 0;">
-                {{ message }}
+                {{ message|trans }}
             </div>
         {% endfor %}
     {% endfor %}
 
     {% if games is empty %}
         <div class="text-center no-games-alert">
-            <p class="fs-4 mb-3">Ձեր գրադարանը դեռ դատարկ է:</p>
-            <a href="{{ path('app_home') }}" class="gaming-btn">Բացահայտել Խաղերը</a>
+            <p class="fs-4 mb-3">{{ 'library.empty_msg'|trans }}</p>
+            <a href="{{ path('app_home') }}" class="gaming-btn">{{ 'library.discover_btn'|trans }}</a>
         </div>
     {% else %}
         <div class="row g-4">
@@ -50,9 +50,9 @@
                         </div>
 
                         <div class="card-footer d-flex align-items-center justify-content-between">
-                            <span class="gaming-price">Գնված է</span>
+                            <span class="gaming-price">{{ 'library.purchased'|trans }}</span>
                             <a href="{{ path('app_game_show', {id: game.id}) }}" class="gaming-btn">
-                                Խաղալ
+                                {{ 'library.play_btn'|trans }}
                             </a>
                         </div>
                     </div>
