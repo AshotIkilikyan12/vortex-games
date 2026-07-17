@@ -53,3 +53,15 @@ register:
     password_label: "Password"
     agree_terms: "I agree to the terms"
     submit_btn: "Register"
+
+# LOGIN PAGE
+login:
+    page_title: "Login"
+    heading: "Login"
+    already_logged_in: "You are already logged in as %user%"
+    logout: "Logout"
+    email_label: "Email Address"
+    password_label: "Password"
+    remember_me: "Remember me"
+    submit_btn: "Sign In"
+    no_account: "Don't have an account? Register"

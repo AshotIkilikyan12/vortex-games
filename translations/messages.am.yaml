@@ -53,3 +53,15 @@ register:
     password_label: "Գաղտնաբառ"
     agree_terms: "Համաձայն եմ պայմաններին"
     submit_btn: "Գրանցվել"
+
+# ՄՈՒՏՔԻ ԷՋ (LOGIN PAGE)
+login:
+    page_title: "Մուտք"
+    heading: "Մուտք"
+    already_logged_in: "Դուք արդեն մուտք եք գործել որպես %user%"
+    logout: "Դուրս գալ"
+    email_label: "Էլ. հասցե"
+    password_label: "Գաղտնաբառ"
+    remember_me: "Հիշել ինձ"
+    submit_btn: "Մուտք Գործել"
+    no_account: "Չունե՞ք հաշիվ։ Գրանցվեք"
