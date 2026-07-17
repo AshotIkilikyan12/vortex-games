@@ -1,4 +1,4 @@
-FROM webdevops/php-apache:8.2
+FROM webdevops/php-apache:8.3
 
 # Սահմանում ենք Apache-ի Document Root-ը դեպի public թղթապանակ
 ENV WEB_DOCUMENT_ROOT=/app/public
