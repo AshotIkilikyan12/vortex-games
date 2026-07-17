@@ -1,33 +1,19 @@
-FROM php:8.2-apache
+FROM webdevops/php-apache:8.2
 
-# Տեղադրում ենք անհրաժեշտ համակարգային գրադարանները
-RUN apt-get update && apt-get install -y \
-    libpq-dev \
-    git \
-    unzip \
-    libicu-dev \
-    libzip-dev \
-    zip \
-    && docker-php-ext-install pdo pdo_pgsql intl zip
+# Սահմանում ենք Apache-ի Document Root-ը դեպի public թղթապանակ
+ENV WEB_DOCUMENT_ROOT=/app/public
+ENV APP_ENV=prod
 
-# Միացնում ենք Apache mod_rewrite-ը Symfony-ի համար
-RUN a2enmod rewrite
+# Տեղափոխում ենք նախագծի ֆայլերը կոնտեյների մեջ
+COPY . /app
 
-# Փոխում ենք Apache-ի Document Root-ը դեպի public թղթապանակ
-ENV APACHE_DOCUMENT_ROOT /var/www/html/public
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
+# Անցնում ենք աշխատանքային թղթապանակ
+WORKDIR /app
 
-# Տեղափոխում ենք նախագծի ֆայլերը
-COPY . /var/www/html
-
-# Տեղադրում ենք Composer-ը
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# Ավելացնում ենք --ignore-platform-reqs, որպեսզի platform extension-ների պատճառով չկանգնի
+# Տեղադրում ենք PHP-ի գրադարանները առանց platform-ի սահմանափակումների
 RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs
 
-# Տալիս ենք թույլտվություններ (Permissions) cache-ի համար
-RUN mkdir -p /var/www/html/var && chown -R www-data:www-data /var/www/html/var
+# Տալիս ենք ճիշտ թույլտվություններ cache-ի համար
+RUN mkdir -p /app/var && chown -R application:application /app/var
 
 EXPOSE 80
