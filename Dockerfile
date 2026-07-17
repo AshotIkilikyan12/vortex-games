@@ -25,13 +25,15 @@ COPY . /var/www/html
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 ENV APP_ENV=prod
-
-# Ավելացնում ենք հատուկ հրաման, որը build-ի ժամանակ անջատում է Symfony-ի cache-ի ավտոմատ գեներացումը,
-# որպեսզի այն կատարվի միայն սերվերը վերջնական միանալիս
 ENV FLEX_SKIP_REGISTRATION_CHECK=1
+
+# Տեղադրում ենք PHP գրադարանները առանց սկրիպտների
 RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs --no-scripts
 
-# Հիմա աշխատեցնում ենք սկրիպտները առանձին
+# --- ԱՅՍՏԵՂ ԱՎԵԼԱՑՆՈՒՄ ԵՆՔ ՄԻԳՐԱՑԻԱՆ ---
+RUN php bin/console doctrine:migrations:migrate --no-interaction
+
+# Մաքրում ենք քեշը
 RUN php bin/console cache:clear --env=prod
 
 # Թույլտվություններ cache-ի համար
