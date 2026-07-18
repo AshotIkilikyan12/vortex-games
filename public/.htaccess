@@ -3,8 +3,3 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^(.*)$ index.php [QSA,L]
 </IfModule>
-
-<Directory /var/www/html/public>
-    AllowOverride None
-    Require all granted
-</Directory>
