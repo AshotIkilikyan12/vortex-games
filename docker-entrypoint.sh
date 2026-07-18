@@ -1,8 +1,16 @@
 #!/bin/sh
 set -e
 
-# Աշխատեցնում ենք միգրացիաները միայն միացման պահին
-php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
+mkdir -p var/cache var/log
 
-# Գործարկում ենք Apache-ն հիմնական ռեժիմով
+chown -R www-data:www-data var
+chmod -R 775 var
+
+php bin/console cache:clear --env=prod --no-debug || true
+php bin/console cache:warmup --env=prod || true
+
+php bin/console doctrine:migrations:migrate \
+    --no-interaction \
+    --allow-no-migration
+
 exec apache2-foreground
