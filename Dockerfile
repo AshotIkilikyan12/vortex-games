@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     libzip-dev \
     zip \
-    && docker-php-ext-install pdo pdo_pgsql intl zip
+    && docker-php-ext-install pdo pdo_mysql intl zip
 
 # Միացնում ենք Apache mod_rewrite-ը
 RUN a2enmod rewrite
