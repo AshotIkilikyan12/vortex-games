@@ -33,4 +33,6 @@ RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs --no-
 # Թույլտվություններ var թղթապանակի համար
 RUN mkdir -p /var/www/html/var && chown -R www-data:www-data /var/www/html/var
 
+RUN php bin/console doctrine:migrations:migrate --no-interaction
+
 EXPOSE 80
